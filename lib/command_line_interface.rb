@@ -13,16 +13,20 @@ class CommandLineInterface
         puts "Would you like to see the menu?"
     end
 
+    def order?
+        puts "Would you like to place an order from this truck?"
+    end
+
     def self.try_again
-            puts "Which cuisine are you interested in today?"
-            user_cuisine = gets.chomp
-            selected_truck = FoodTruck.cuisine_choice(user_cuisine)
-            truckname = FoodTruck.truck_name(selected_truck)
-            truckid = FoodTruck.truck_id(selected_truck)
-            puts "Would you like to see the menu?"
-            choice = gets.chomp
-            correctmenu = Menu.truck_menu(truckid)
-            Menu.show_menu(choice, correctmenu)
+        puts "Which cuisine are you interested in today?"
+        user_cuisine = gets.chomp
+        selected_truck = FoodTruck.cuisine_choice(user_cuisine)
+        truckname = FoodTruck.truck_name(selected_truck)
+        truckid = FoodTruck.truck_id(selected_truck)
+        puts "Would you like to see the menu?"
+        choice = gets.chomp
+        correctmenu = Menu.truck_menu(truckid)
+        Menu.show_menu(choice, correctmenu)
     end
 
     def run
@@ -36,8 +40,8 @@ class CommandLineInterface
         choice = gets.chomp
         correctmenu = Menu.truck_menu(truckid)
         Menu.show_menu(choice, correctmenu)
-        
-        # binding.pry
+        order?
+
     end
 end
 

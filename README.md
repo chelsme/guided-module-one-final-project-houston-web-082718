@@ -1,3 +1,7 @@
+I want to be able to select a truck bused on a cuisine type.
+I want to be able to see a list of menu items available on my selected truck.
+
+
 # Module One Project 
 
 Congratulations, you're at the end of module one! You've worked crazy hard to get here and have learned a ton.
