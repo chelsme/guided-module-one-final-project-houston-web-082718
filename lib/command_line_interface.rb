@@ -15,22 +15,25 @@ class CommandLineInterface
 
     def order?
         puts "Would you like to place an order from this truck?"
+        input = gets.chomp
+        if input == "yes"
+            Order.new_order
+        else
+            puts "Would you like to choose a different cuisine?"
+            new_cuisine = gets.chomp
+            if new_cuisine == "yes"
+                self.run
+            end
+        end
     end
 
-    def self.try_again
-        puts "Which cuisine are you interested in today?"
-        user_cuisine = gets.chomp
-        selected_truck = FoodTruck.cuisine_choice(user_cuisine)
-        truckname = FoodTruck.truck_name(selected_truck)
-        truckid = FoodTruck.truck_id(selected_truck)
-        puts "Would you like to see the menu?"
-        choice = gets.chomp
-        correctmenu = Menu.truck_menu(truckid)
-        Menu.show_menu(choice, correctmenu)
+    def new_order
+        puts "What would you like to order?"
+        order_item = gets.chomp
+        order = Order.new
     end
 
     def run
-        greet
         cuisine_choice
         user_cuisine = gets.chomp
         selected_truck = FoodTruck.cuisine_choice(user_cuisine)
@@ -41,7 +44,6 @@ class CommandLineInterface
         correctmenu = Menu.truck_menu(truckid)
         Menu.show_menu(choice, correctmenu)
         order?
-
     end
 end
 

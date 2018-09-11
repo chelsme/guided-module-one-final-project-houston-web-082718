@@ -7,9 +7,16 @@ class Menu < ActiveRecord::Base
     end
 
     def self.show_menu(choice, correctmenu)
-        if choice != "yes"
-            CommandLineInterface.try_again
+        while choice != "yes"
+            puts "Which cuisine are you interested in today?"
+            user_cuisine = gets.chomp
+            selected_truck = FoodTruck.cuisine_choice(user_cuisine)
+            truckname = FoodTruck.truck_name(selected_truck)
+            truckid = FoodTruck.truck_id(selected_truck)
+            puts "Would you like to see the menu?"
+            choice = gets.chomp
         end
         puts "#{correctmenu.join(", ")}"
     end
+
 end
