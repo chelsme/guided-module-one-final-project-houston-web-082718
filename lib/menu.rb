@@ -5,4 +5,11 @@ class Menu < ActiveRecord::Base
         truckmenu = Menu.where("food_truck_id = ?", truckid)
         truckmenu.pluck(:menu_item)
     end
+
+    def self.show_menu(choice, correctmenu)
+        if choice != "yes"
+            CommandLineInterface.try_again
+        end
+        puts "#{correctmenu.join(", ")}"
+    end
 end

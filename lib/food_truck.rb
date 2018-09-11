@@ -18,4 +18,5 @@ class FoodTruck < ActiveRecord::Base
     def self.truck_id(selected_truck)
         mytruck = selected_truck.pluck(:id)
     end
+
 end
