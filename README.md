@@ -1,5 +1,9 @@
-I want to be able to select a truck bused on a cuisine type.
-I want to be able to see a list of menu items available on my selected truck.
+As a customer, I want to be able to select a truck bused on a cuisine type.
+As a customer, I want to be able to see a list of menu items available on my selected truck.
+As a customer, I want to be able to create a new order from a particular food truck.
+As a customer, I want to be able to view my order.
+As a customer, I want to be able to modify my order.
+As a customer, I want to be able to cancel my order.
 
 
 # Module One Project 

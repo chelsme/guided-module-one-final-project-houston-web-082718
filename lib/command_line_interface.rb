@@ -1,54 +1,64 @@
 require "pry"
 
 class CommandLineInterface
-    # def full_greeting
-    #     get_customer
-    #     new_name = gets.chomp
-    #     greet(new_name)
-    # end
+    def greet_and_get_customer
+        get_customer
+        new_name = gets.chomp
+        greet(new_name)
+        Customer.new(name: new_name)
+    end
     
-    # def get_customer
-    #     puts "Welcome to Food Land! Please tell us your first name."
-    # end
+    def get_customer
+        puts "Welcome to Food Land! Please tell us your first name."
+    end
     
-    # def greet(new_name)
-    #     puts " Hi, #{new_name}. You can order food here. These are the cuisines we have available: #{FoodTruck.type_of_food.join(", ")}."
-    #     new_name.downcase = Customer.new(name: new_name)
-    # end
+    def greet(new_name)
+        puts "Hi, #{new_name}. You can order food here. These are the cuisines we have available: #{FoodTruck.type_of_food.join(", ")}."
+    end
 
     def cuisine_choice
         puts "Which cuisine are you interested in today?"
     end
 
-    def menu?
+    def menu?(correctmenu, new_customer)
         puts "Would you like to see the menu?"
-    end
-
-    def order?
-        puts "Would you like to place an order from this truck?"
         input = gets.chomp
-        if input != "yes"
+        if input == "yes"
+            Menu.show_menu(correctmenu)
+        else
             puts "Would you like to choose a different cuisine?"
-            new_cuisine = gets.chomp
-            if new_cuisine == "yes"
-                self.run
+            yes_or_no = gets.chomp
+            if yes_or_no == "yes"
+                self.run(new_customer)
             end
         end
     end
 
-    def run
+    def order?(new_customer)
+        puts "Would you like to place an order from this truck?"
+        input = gets.chomp
+        if input == "yes"
+            puts "What would you like to order?"
+        else
+            puts "Would you like to choose a different cuisine?"
+            yes_or_no = gets.chomp
+            if yes_or_no == "yes"
+                self.run(new_customer)
+            end
+        end
+    end
+
+    def run(new_customer)
         cuisine_choice
         user_cuisine = gets.chomp
         selected_truck = FoodTruck.cuisine_choice(user_cuisine)
         truckname = FoodTruck.truck_name(selected_truck)
         truckid = FoodTruck.truck_id(selected_truck)
-        menu?
-        choice = gets.chomp
         correctmenu = Menu.truck_menu(truckid)
-        Menu.show_menu(choice, correctmenu)
-        order?
-        binding.pry
-        .new_order(truckid)
+        menu?(correctmenu, new_customer)
+        correctmenu = Menu.truck_menu(truckid)
+        order?(new_customer)
+        new_customer.new_order(truckid)
     end
 end
 

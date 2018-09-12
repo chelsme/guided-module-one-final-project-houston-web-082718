@@ -6,16 +6,7 @@ class Menu < ActiveRecord::Base
         truckmenu.pluck(:menu_item)
     end
 
-    def self.show_menu(choice, correctmenu)
-        while choice != "yes"
-            puts "Which cuisine are you interested in today?"
-            user_cuisine = gets.chomp
-            selected_truck = FoodTruck.cuisine_choice(user_cuisine)
-            truckname = FoodTruck.truck_name(selected_truck)
-            truckid = FoodTruck.truck_id(selected_truck)
-            puts "Would you like to see the menu?"
-            choice = gets.chomp
-        end
+    def self.show_menu(correctmenu)
         puts "#{correctmenu.join(", ")}"
     end
 
