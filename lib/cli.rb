@@ -14,23 +14,25 @@ class CLI
     
     def greet(new_name)
         puts "Hey, #{new_name}! You can order food here."
-        puts "These are the cuisines we have available: #{FoodTruck.type_of_food.join(", ")}."
     end
 
     def cuisine_choice
+        puts "These are the cuisines we have available: #{FoodTruck.type_of_food.join(", ")}."
         puts "Which cuisine are you interested in today?"
     end
 
     def menu?(correctmenu, new_customer)
         puts "Would you like to see the menu?"
         input = gets.chomp
-        if input == "yes"
+        if input.include? "y" 
             Menu.show_menu(correctmenu)
         else
             puts "Would you like to choose a different cuisine?"
             yes_or_no = gets.chomp
-            if yes_or_no == "yes"
+            if yes_or_no.include? "y"
                 self.run(new_customer)
+            else
+                exit!
             end
         end
     end
@@ -38,13 +40,15 @@ class CLI
     def order?(new_customer)
         puts "Would you like to place an order from this truck?"
         input = gets.chomp
-        if input == "yes"
+        if input.include? "y"
             puts "What would you like to order?"
         else
             puts "Would you like to choose a different cuisine?"
             yes_or_no = gets.chomp
-            if yes_or_no == "yes"
-                self.run(new_customer)
+            if yes_or_no.include? "y"
+                self.run(new_customer)                
+            else
+                exit!
             end
         end
     end
