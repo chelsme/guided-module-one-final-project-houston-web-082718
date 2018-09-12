@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180911221205) do
+ActiveRecord::Schema.define(version: 20180912185314) do
 
   create_table "customers", force: :cascade do |t|
     t.string "name"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20180911221205) do
     t.integer "food_truck_id"
     t.integer "customer_id"
     t.string  "order_item"
+    t.string  "order_status"
     t.index ["customer_id"], name: "index_orders_on_customer_id"
     t.index ["food_truck_id"], name: "index_orders_on_food_truck_id"
   end

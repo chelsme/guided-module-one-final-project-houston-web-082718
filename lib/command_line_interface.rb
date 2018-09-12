@@ -5,7 +5,7 @@ class CommandLineInterface
         get_customer
         new_name = gets.chomp
         greet(new_name)
-        Customer.new(name: new_name)
+        Customer.create(name: new_name)
     end
     
     def get_customer
@@ -48,6 +48,29 @@ class CommandLineInterface
         end
     end
 
+    def crud?
+        puts "What would you like to do next? (choose a number)"
+        options = ["view your order", "change your order", "cancel your order", "exit"]
+        options.each_with_index do |option, index|
+            puts "#{index + 1}. #{option}"
+        end
+    end
+
+    def customer_crud(new_customer, crud_choice)
+        if crud_choice == "1"
+            new_customer.view_order
+        elsif crud_choice == "2"
+            new_customer.change_order
+        elsif crud_choice == "3"
+            new_customer.cancel_order
+        end
+        crud?
+        crud_choice = gets.chomp
+        unless crud_choice == "4"
+            customer_crud(new_customer, crud_choice)
+        end
+    end
+
     def run(new_customer)
         cuisine_choice
         user_cuisine = gets.chomp
@@ -59,6 +82,11 @@ class CommandLineInterface
         correctmenu = Menu.truck_menu(truckid)
         order?(new_customer)
         new_customer.new_order(truckid)
+        crud?
+        crud_choice = gets.chomp
+        if crud_choice != "4"
+            customer_crud(new_customer, crud_choice)
+        end
     end
 end
 
