@@ -1,6 +1,6 @@
 require "pry"
 
-class CommandLineInterface
+class CLI
     def greet_and_get_customer
         get_customer
         new_name = gets.chomp
@@ -13,7 +13,8 @@ class CommandLineInterface
     end
     
     def greet(new_name)
-        puts "Hi, #{new_name}. You can order food here. These are the cuisines we have available: #{FoodTruck.type_of_food.join(", ")}."
+        puts "Hey, #{new_name}! You can order food here."
+        puts "These are the cuisines we have available: #{FoodTruck.type_of_food.join(", ")}."
     end
 
     def cuisine_choice
