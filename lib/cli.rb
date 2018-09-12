@@ -68,12 +68,12 @@ class CLI
             new_customer.change_order
         elsif crud_choice == "3"
             new_customer.cancel_order
+        elsif crud_choice == "4"
+            exit!
         end
         crud?
         crud_choice = gets.chomp
-        unless crud_choice == "4"
-            customer_crud(new_customer, crud_choice)
-        end
+        customer_crud(new_customer, crud_choice)
     end
 
     def run(new_customer)
