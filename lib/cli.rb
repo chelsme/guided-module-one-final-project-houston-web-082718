@@ -48,14 +48,7 @@ class CLI
         if input.include? "y" 
             Menu.show_menu(correctmenu)
         else
-            puts "Would you like to choose a different cuisine?".colorize(:cyan)
-            yes_or_no = gets.chomp
-            if yes_or_no.include? "y"
-                self.run(new_customer)
-            else
-                puts "Maybe next time!".colorize(:cyan)
-                exit!
-            end
+            diff_cuisine(new_customer)
         end
     end
 
@@ -65,14 +58,18 @@ class CLI
         if input.include? "y"
             puts "What would you like to order?".colorize(:cyan)
         else
-            puts "Would you like to choose a different cuisine?".colorize(:cyan)
-            yes_or_no = gets.chomp
-            if yes_or_no.include? "y"
-                self.run(new_customer)                
-            else
-                puts "Maybe next time!".colorize(:red)
-                exit!
-            end
+            diff_cuisine(new_customer)
+        end
+    end
+
+    def diff_cuisine(new_customer)
+        puts "Would you like to choose a different cuisine?".colorize(:cyan)
+        yes_or_no = gets.chomp
+        if yes_or_no.include? "y"
+            self.run(new_customer)                
+        else
+            puts "Maybe next time!".colorize(:red)
+            exit!
         end
     end
 
