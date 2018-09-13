@@ -5,10 +5,6 @@ class FoodTruck < ActiveRecord::Base
     def self.type_of_food
         self.pluck(:food_type)
     end
-
-    def self.cuisine_choice(user_cuisine)
-        self.where("food_type = ?", user_cuisine)
-    end
     
     def self.truck_name(selected_truck)
         mytruck = selected_truck.pluck(:name)
