@@ -7,7 +7,7 @@ class Menu < ActiveRecord::Base
     end
 
     def self.show_menu(correctmenu)
-        puts "#{correctmenu.join(", ")}"
+        puts "#{correctmenu.join(", ")}".colorize(:light_green)
     end
 
 end

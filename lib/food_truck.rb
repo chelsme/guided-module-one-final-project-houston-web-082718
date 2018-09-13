@@ -8,7 +8,7 @@ class FoodTruck < ActiveRecord::Base
     
     def self.truck_name(selected_truck)
         mytruck = selected_truck.pluck(:name)
-        puts "Great choice! #{mytruck.join("")} is the food truck for you."
+        puts "Great choice! #{mytruck.join("")} is the food truck for you.".colorize(:light_blue)
     end
 
     def self.truck_id(selected_truck)

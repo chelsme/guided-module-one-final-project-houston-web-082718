@@ -9,17 +9,17 @@ class CLI
     end
     
     def get_customer
-        puts "Welcome to Food Land! Please tell us your first and last name."
+        puts "Welcome to Food Land! Please tell us your first and last name.".colorize(:cyan)
     end
     
     def greet(new_name)
         first_name = new_name.split(" ")[0]
-        puts "Hey, #{first_name}! You can order food here."
+        puts "Hey, #{first_name}! You can order food here.".colorize(:cyan)
     end
 
     def give_cuisine_choice
-        puts "These are the cuisines we have available: #{FoodTruck.type_of_food.join(", ")}."
-        puts "Which cuisine are you interested in today?"
+        puts "These are the cuisines we have available: #{FoodTruck.type_of_food.join(", ")}.".colorize(:light_green)
+        puts "Which cuisine are you interested in today?".colorize(:cyan)
     end
 
     def customer_cuisine_choice(user_cuisine, new_customer)
@@ -43,44 +43,44 @@ class CLI
     end
 
     def menu?(correctmenu, new_customer)
-        puts "Would you like to see the menu?"
+        puts "Would you like to see the menu?".colorize(:cyan)
         input = gets.chomp
         if input.include? "y" 
             Menu.show_menu(correctmenu)
         else
-            puts "Would you like to choose a different cuisine?"
+            puts "Would you like to choose a different cuisine?".colorize(:cyan)
             yes_or_no = gets.chomp
             if yes_or_no.include? "y"
                 self.run(new_customer)
             else
-                puts "Maybe next time!"
+                puts "Maybe next time!".colorize(:cyan)
                 exit!
             end
         end
     end
 
     def order?(new_customer)
-        puts "Would you like to place an order from this truck?"
+        puts "Would you like to place an order from this truck?".colorize(:cyan)
         input = gets.chomp
         if input.include? "y"
-            puts "What would you like to order?"
+            puts "What would you like to order?".colorize(:cyan)
         else
-            puts "Would you like to choose a different cuisine?"
+            puts "Would you like to choose a different cuisine?".colorize(:cyan)
             yes_or_no = gets.chomp
             if yes_or_no.include? "y"
                 self.run(new_customer)                
             else
-                puts "Maybe next time!"
+                puts "Maybe next time!".colorize(:red)
                 exit!
             end
         end
     end
 
     def crud?
-        puts "What would you like to do next? (choose a number)"
+        puts "What would you like to do next? (choose a number)".colorize(:cyan)
         options = ["view your newest order", "change your newest order", "cancel your newest order", "place a new order from the same truck", "place a new order from a different truck", "view all of your orders", "exit"]
         options.each_with_index do |option, index|
-            puts "#{index + 1}. #{option}"
+            puts "#{index + 1}. #{option}".colorize(:light_blue)
         end
     end
 
@@ -92,7 +92,7 @@ class CLI
         elsif crud_choice == "3"
             new_customer.cancel_newest_order
         elsif crud_choice == "4"
-            puts "What would you like to order?"
+            puts "What would you like to order?".colorize(:light_blue)
             new_customer.new_order(truckid)
         elsif crud_choice == "5"
             self.run(new_customer)
