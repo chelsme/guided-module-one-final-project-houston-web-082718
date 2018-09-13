@@ -28,13 +28,13 @@ class CLI
             exit!
         elsif user_cuisine.include?("ta")
             user_cuisine = "tacos"
-        elsif user_cuisine.include?("ice" || "cream" || "ic")
+        elsif user_cuisine.include?("ic") || user_cuisine.include?("cream")
             user_cuisine = "ice cream"
-        elsif user_cuisine.include?("pi")
+        elsif user_cuisine.include?("p")
             user_cuisine = "pizza"
-        elsif user_cuisine.include?("do")
+        elsif user_cuisine.include?("d")
             user_cuisine = "donuts"
-        elsif user_cuisine.include?("su" || "roll")
+        elsif user_cuisine.include?("su") || user_cuisine.include?("roll")
             user_cuisine = "sushi"
         else
             self.run(new_customer)
@@ -78,13 +78,13 @@ class CLI
 
     def crud?
         puts "What would you like to do next? (choose a number)"
-        options = ["view your newest order", "change your newest order", "cancel your newest order", "view all of your orders", "exit"]
+        options = ["view your newest order", "change your newest order", "cancel your newest order", "place a new order from the same truck", "place a new order from a different truck", "view all of your orders", "exit"]
         options.each_with_index do |option, index|
             puts "#{index + 1}. #{option}"
         end
     end
 
-    def customer_crud(new_customer, crud_choice, new_name)
+    def customer_crud(new_customer, crud_choice, new_name, truckid)
         if crud_choice == "1"
             new_customer.view_newest_order
         elsif crud_choice == "2"
@@ -92,13 +92,18 @@ class CLI
         elsif crud_choice == "3"
             new_customer.cancel_newest_order
         elsif crud_choice == "4"
-            new_customer.view_all_orders(new_name)
+            puts "What would you like to order?"
+            new_customer.new_order(truckid)
         elsif crud_choice == "5"
+            self.run(new_customer)
+        elsif crud_choice == "6"
+            new_customer.view_all_orders(new_name)
+        elsif crud_choice == "7"
             exit!
         end
         crud?
         crud_choice = gets.chomp
-        customer_crud(new_customer, crud_choice, new_name)
+        customer_crud(new_customer, crud_choice, new_name, truckid)
     end
 
     def run(new_customer)
@@ -115,10 +120,10 @@ class CLI
         new_customer.new_order(truckid)
         crud?
         crud_choice = gets.chomp
-        if crud_choice == "5"
+        if crud_choice == "7"
             exit!
         else
-            customer_crud(new_customer, crud_choice, new_name)
+            customer_crud(new_customer, crud_choice, new_name, truckid)
         end
     end
 end
