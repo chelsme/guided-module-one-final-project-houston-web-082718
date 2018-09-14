@@ -44,7 +44,7 @@ class CLI
 
     def menu?(correctmenu, new_customer)
         puts "Would you like to see the menu?".colorize(:cyan)
-        input = gets.chomp
+        input = gets.chomp.downcase
         if input.include? "y" 
             Menu.show_menu(correctmenu)
         else
@@ -54,7 +54,7 @@ class CLI
 
     def order?(new_customer)
         puts "Would you like to place an order from this truck?".colorize(:cyan)
-        input = gets.chomp
+        input = gets.chomp.downcase
         if input.include? "y"
             puts "What would you like to order?".colorize(:cyan)
         else
@@ -64,7 +64,7 @@ class CLI
 
     def diff_cuisine(new_customer)
         puts "Would you like to choose a different cuisine?".colorize(:cyan)
-        yes_or_no = gets.chomp
+        yes_or_no = gets.chomp.downcase
         if yes_or_no.include? "y"
             self.run(new_customer)                
         else
@@ -106,7 +106,7 @@ class CLI
     def run(new_customer)
         new_name = new_customer.name
         give_cuisine_choice
-        user_cuisine = gets.chomp
+        user_cuisine = gets.chomp.downcase
         selected_truck = customer_cuisine_choice(user_cuisine, new_customer)
         truckname = FoodTruck.truck_name(selected_truck)
         truckid = FoodTruck.truck_id(selected_truck)

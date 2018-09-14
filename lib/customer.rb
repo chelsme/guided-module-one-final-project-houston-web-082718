@@ -4,7 +4,7 @@ class Customer < ActiveRecord::Base
     
 
     def new_order(truckid)
-        order = gets.chomp
+        order = gets.chomp.downcase
         Order.create(food_truck_id: truckid.join(""), customer_id: self.id, order_item: order, order_status: "open")
     end
 
@@ -33,7 +33,7 @@ class Customer < ActiveRecord::Base
         order = order.last
         puts "You ordered: #{order.order_item}.".colorize(:light_blue)
         puts "What would you like instead?".colorize(:cyan)
-        new_order_item = gets.chomp
+        new_order_item = gets.chomp.downcase
         order.order_item = new_order_item
         order.order_status = "changed"
         order.save
