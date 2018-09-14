@@ -3,9 +3,14 @@ class Customer < ActiveRecord::Base
     has_many :food_trucks, through: :orders
     
 
-    def new_order(truckid)
+    def new_order(truckid, new_customer, new_cli)
+        puts "If you are ready, go ahead and type in your order. To choose a new cuisine, type 'no'.".colorize(:light_red)
         order = gets.chomp.downcase
-        Order.create(food_truck_id: truckid.join(""), customer_id: self.id, order_item: order, order_status: "open")
+        if order == "no"
+            new_cli.run(new_customer, new_cli)
+        else
+            Order.create(food_truck_id: truckid.join(""), customer_id: self.id, order_item: order, order_status: "open")
+        end
     end
 
     def view_newest_order

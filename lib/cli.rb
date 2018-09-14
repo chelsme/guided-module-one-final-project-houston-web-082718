@@ -22,7 +22,7 @@ class CLI
         puts "Which cuisine are you interested in today?".colorize(:cyan)
     end
 
-    def customer_cuisine_choice(user_cuisine, new_customer)
+    def customer_cuisine_choice(user_cuisine, new_customer, new_cli)
         if user_cuisine.include?("none" || "exit" || "no" || "nah")
             puts "Maybe next time!"
             exit!
@@ -34,10 +34,10 @@ class CLI
             user_cuisine = "pizza"
         elsif user_cuisine.include?("d")
             user_cuisine = "donuts"
-        elsif user_cuisine.include?("su") || user_cuisine.include?("roll")
+        elsif user_cuisine.include?("su") || user_cuisine.include?("rol")
             user_cuisine = "sushi"
         else
-            self.run(new_customer)
+            self.run(new_customer, new_cli)
         end
         FoodTruck.where("food_type = ?", user_cuisine)
     end
@@ -48,25 +48,15 @@ class CLI
         if input.include? "y" 
             Menu.show_menu(correctmenu)
         else
-            diff_cuisine(new_customer)
+            diff_cuisine(new_customer, new_cli)
         end
     end
 
-    def order?(new_customer)
-        puts "Would you like to place an order from this truck?".colorize(:cyan)
-        input = gets.chomp.downcase
-        if input.include? "y"
-            puts "What would you like to order?".colorize(:cyan)
-        else
-            diff_cuisine(new_customer)
-        end
-    end
-
-    def diff_cuisine(new_customer)
+    def diff_cuisine(new_customer, new_cli)
         puts "Would you like to choose a different cuisine?".colorize(:cyan)
         yes_or_no = gets.chomp.downcase
         if yes_or_no.include? "y"
-            self.run(new_customer)                
+            self.run(new_customer, new_cli)                
         else
             puts "Maybe next time!".colorize(:red)
             exit!
@@ -81,7 +71,7 @@ class CLI
         end
     end
 
-    def customer_crud(new_customer, crud_choice, new_name, truckid)
+    def customer_crud(new_customer, crud_choice, new_name, truckid, new_cli)
         if crud_choice == "1"
             new_customer.view_newest_order
         elsif crud_choice == "2"
@@ -90,9 +80,9 @@ class CLI
             new_customer.cancel_newest_order
         elsif crud_choice == "4"
             puts "What would you like to order?".colorize(:light_blue)
-            new_customer.new_order(truckid)
+            new_customer.new_order(truckid, new_customer, new_cli)
         elsif crud_choice == "5"
-            self.run(new_customer)
+            self.run(new_customer, new_cli)
         elsif crud_choice == "6"
             new_customer.view_all_orders(new_name)
         elsif crud_choice == "7"
@@ -100,27 +90,26 @@ class CLI
         end
         crud?
         crud_choice = gets.chomp
-        customer_crud(new_customer, crud_choice, new_name, truckid)
+        customer_crud(new_customer, crud_choice, new_name, truckid, new_cli)
     end
 
-    def run(new_customer)
+    def run(new_customer, new_cli)
         new_name = new_customer.name
         give_cuisine_choice
         user_cuisine = gets.chomp.downcase
-        selected_truck = customer_cuisine_choice(user_cuisine, new_customer)
+        selected_truck = customer_cuisine_choice(user_cuisine, new_customer, new_cli)
         truckname = FoodTruck.truck_name(selected_truck)
         truckid = FoodTruck.truck_id(selected_truck)
         correctmenu = Menu.truck_menu(truckid)
         menu?(correctmenu, new_customer)
         correctmenu = Menu.truck_menu(truckid)
-        order?(new_customer)
-        new_customer.new_order(truckid)
+        new_customer.new_order(truckid, new_customer, new_cli)
         crud?
         crud_choice = gets.chomp
         if crud_choice == "7"
             exit!
         else
-            customer_crud(new_customer, crud_choice, new_name, truckid)
+            customer_crud(new_customer, crud_choice, new_name, truckid, new_cli)
         end
     end
 end
